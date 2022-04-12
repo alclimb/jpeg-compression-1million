@@ -1,41 +1,22 @@
 import * as Sharp from "sharp";
 
 async function main() {
-  console.log(`main >>`);
-
+  // 元の画像を読み込んでバッファーとして保持
   let buffer = await Sharp(`./assets/src.jpg`).toBuffer();
 
+  // 100万回試行する
   for (let i = 0; i < 1000000; i++) {
-    buffer = await compression(buffer);
+    // jpeg圧縮を行う
+    buffer = await Sharp(buffer)
+      .jpeg({ quality: 30 })
+      .toBuffer();
 
+    // ログ表示
     console.log(`  i="${i}"`);
   }
 
+  // jpeg圧縮を行った画像を保存する
   await Sharp(buffer).toFile(`out.jpg`);
 }
-
-async function compression(src: Buffer) {
-  const dst = await Sharp(src)
-    .jpeg({ quality: 30 })
-    .toBuffer();
-
-  return dst;
-}
-
-
-// async function main() {
-//   console.log(`main >>`);
-
-//   const sharp = Sharp(`./assets/src.jpg`);
-
-//   for (let i = 0; i < 1000000; i++) {
-//     // 
-//     sharp.jpeg({ quality: 30 });
-
-//     console.log(`  i="${i}"`);
-//   }
-
-//   sharp.toFile(`out.jpg`);
-// }
 
 main();
