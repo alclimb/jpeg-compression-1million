@@ -6,7 +6,7 @@
     "start": "ts-node-dev main.ts"
   },
   "dependencies": {
-    "sharp": "^0.30.3"
+    "sharp": "^0.30.5"
   },
   "devDependencies": {
     "@types/sharp": "^0.30.1",
